@@ -25,4 +25,19 @@ jobs:
           push: true
           tags: 
             nathansnts/api-crud:v${{github.run_number}}
+
+  CD:
+    runs-on: ubuntu-latest
+    needs: [CI]
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - name: Defined context Cluster Kubernetes
+        uses: Azure/k8s-set-context@v3.0
+        with: 
+          method: kubeconfig
+          kubeconfig: ${{secrets.K8S_CONFIG}}
+
+      
             
