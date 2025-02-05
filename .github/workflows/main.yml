@@ -24,5 +24,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: 
-            nathansnts/api-crud:v1
+            nathansnts/api-crud:v${{github.run_number}}
             
