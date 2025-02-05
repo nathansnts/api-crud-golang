@@ -39,5 +39,8 @@ jobs:
           method: kubeconfig
           kubeconfig: ${{secrets.K8S_CONFIG}}
 
-      
-            
+      - name: Deploy to Kubernetes Cluster
+        uses: Azure/k8s-deploy@v4.9
+        with:
+          images: nathansnts/api-crud:v${{github.run_number}}
+          manifests: k8s/deployment.yaml
