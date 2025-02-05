@@ -5,26 +5,25 @@ on:
     branches: ["main"]
 
 jobs:
-  CI: 
+  CI:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4.2.2
-      
+
       - name: Autentication Docker Hub
         uses: docker/login-action@v3.3.0
         with:
-            username: ${{secrets.DOCKERHUB_USER}}
-            password: ${{secrets.DOCKERHUB_PASSWORD}}
-            
+          username: ${{secrets.DOCKERHUB_USER}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
+
       - name: Build and Push Docker Image API
         uses: docker/build-push-action@v6.13.0
         with:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: 
-            nathansnts/api-crud:v${{github.run_number}}
+          tags: nathansnts/api-crud:v${{github.run_number}}
 
   CD:
     runs-on: ubuntu-latest
@@ -35,7 +34,7 @@ jobs:
 
       - name: Defined context Cluster Kubernetes
         uses: Azure/k8s-set-context@v3.0
-        with: 
+        with:
           method: kubeconfig
           kubeconfig: ${{secrets.K8S_CONFIG}}
 
@@ -43,4 +42,4 @@ jobs:
         uses: Azure/k8s-deploy@v4.9
         with:
           images: nathansnts/api-crud:v${{github.run_number}}
-          manifests: k8s/deployment.yaml
+          manifests: ./k8s/deployment.yaml
