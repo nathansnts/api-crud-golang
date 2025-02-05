@@ -20,8 +20,8 @@ jobs:
       - name: Build and Push Docker Image API
         uses: docker/build-push-action@v6.13.0
         with:
-          context: ./api-crud-golang
-          file: ./api-crud-golang/Dockerfile
+          context: ./
+          file: ./Dockerfile
           push: true
           tags: 
             nathansants/api-crud:v1
